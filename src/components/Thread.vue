@@ -1,20 +1,21 @@
 <template>
   <div class="col-12">
-    <div class="my-3 mx-5 p-3 bg-secondary text-light">
-      <small>Thread</small>
-      <PostCard />
+    <div class="my-3 mx-lg-5 py-5 p-4 bg-secondary text-light mt-5">
+      <PostCard v-for="post in posts" :key="post._id" :post="post" />
     </div>
   </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
+import { AppState } from '../AppState'
 export default {
   setup() {
     const state = reactive({
     })
     return {
-      state
+      state,
+      posts: computed(() => AppState.posts)
     }
   }
 }

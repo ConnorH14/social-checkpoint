@@ -3,12 +3,13 @@
   </header>
   <main>
     <div class="container-fluid m-0 p-0">
-      <div class="row">
-        <div class="col-lg-3 m-0 bg-dark fill-bar">
+      <Navbar class="navbar-custom shadow-lg" />
+      <div class="row mt-3">
+        <div class="col-xl-3 m-0 mt-5 bg-dark fill-bar">
           <Accountbar />
         </div>
-        <div class="col-xl-9 m-0 p-0">
-          <Navbar />
+        <div class="col-xl-3 m-0 p-0"></div>
+        <div class="col-xl-9 m-0 p-0 mt-5">
           <router-view />
         </div>
       </div>
@@ -34,8 +35,12 @@ export default {
 @import "./assets/scss/main.scss";
 
 .fill-bar {
+  position: fixed;
   height: 100vh;
-  border-right: 3px solid #1a1919;
+}
+
+.navbar-custom {
+  z-index: 10;
 }
 
 @media only screen and (max-width: 1199px) {
