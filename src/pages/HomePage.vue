@@ -1,25 +1,32 @@
 <template>
   <div class="container-fluid">
     <div class="row">
+      <CreatePost v-if="account.id" />
       <Thread />
     </div>
   </div>
 </template>
 
 <script>
-import { watchEffect } from '@vue/runtime-core'
+import { computed, reactive, watchEffect } from '@vue/runtime-core'
 import { postService } from '../services/PostService'
 import Notification from '../utils/Notification'
+import { AppState } from '../AppState'
 export default {
   name: 'Home',
   setup() {
+    const state = reactive({ })
     watchEffect(async() => {
       try {
-        postService.getPosts()
+        await postService.getPosts()
       } catch (error) {
         Notification.toast(error, 'error')
       }
     })
+    return {
+      state,
+      account: computed(() => AppState.account)
+    }
   }
 }
 </script>
