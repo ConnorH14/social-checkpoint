@@ -1,6 +1,6 @@
 module.exports = {
   // NOTE to host on github publicPath: '/YOUR-GITHUB-REPOSITORY-NAME/',
-  publicPath: '/social-checkpoint/',
+  publicPath: '/deploy-social/',
   outputDir: 'docs',
   productionSourceMap: false
 }
