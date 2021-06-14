@@ -6,11 +6,14 @@
       <Navbar class="navbar-custom shadow-lg" />
       <div class="row mt-3">
         <div class="col-xl-3 m-0 mt-5 bg-dark fill-bar">
-          <Accountbar />
+          <Accountbar v-if="account.id" />
         </div>
         <div class="col-xl-3 m-0 p-0"></div>
-        <div class="col-xl-9 m-0 p-0 mt-5">
+        <div class="col-xl-7 m-0 p-0 mt-5">
           <router-view />
+        </div>
+        <div class="col-xl-2 m-0 p-0">
+          <Posters />
         </div>
       </div>
     </div>
@@ -20,13 +23,24 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { AppState } from './AppState'
+import { postService } from './services/PostService'
 export default {
   name: 'App',
   setup() {
+    const state = reactive({ })
+    onMounted(async() => {
+      try {
+        await postService.getPosters()
+      } catch (error) {
+        Notification.toast(error, 'error')
+      }
+    })
     return {
-      appState: computed(() => AppState)
+      state,
+      appState: computed(() => AppState),
+      account: computed(() => AppState.account)
     }
   }
 }

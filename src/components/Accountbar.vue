@@ -9,11 +9,14 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
 export default {
   setup() {
+    const state = reactive({
+    })
     return {
+      state,
       account: computed(() => AppState.account)
     }
   }

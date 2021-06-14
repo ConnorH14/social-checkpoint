@@ -22,12 +22,17 @@
             Home
           </router-link>
         </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'About' }" class="nav-link">
-            About
-          </router-link>
+        <!-- <li class="ml-lg-5">
         </li>
+        <li class="ml-lg-3">
+        </li> -->
       </ul>
+      <form class="form-inline mx-auto" @submit.prevent="searchPosts">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" v-model="state.currentSearch">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
       <span class="navbar-text mr-lg-4">
         <button
           class="btn btn-outline-primary text-uppercase"
@@ -75,13 +80,17 @@
 
 <script>
 import { AuthService } from '../services/AuthService'
+import { useRouter } from 'vue-router'
 import { AppState } from '../AppState'
 import { computed, reactive } from 'vue'
+import { postService } from '../services/PostService'
 export default {
   name: 'Navbar',
   setup() {
+    const router = useRouter()
     const state = reactive({
-      dropOpen: false
+      dropOpen: false,
+      currentSearch: ''
     })
     return {
       state,
@@ -92,6 +101,10 @@ export default {
       },
       async logout() {
         AuthService.logout({ returnTo: window.location.origin })
+      },
+      async searchPosts() {
+        await postService.getPostByQuery(state.currentSearch)
+        router.push({ name: 'SearchPage' })
       }
     }
   }
